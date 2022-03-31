@@ -19,8 +19,8 @@ try {
 	$callback = function ($update, $bot) {
 		global $id;
 		if($update != null){
-		  $config = json_decode(file_get_contents('config.json'),1);
-		  $config['filter'] = $config['filter'] != null ? $config['filter'] : 1;
+$config = json_decode(file_get_contents('config.json'),1);
+$config['filter'] = $config['filter'] != null ? $config['filter'] : 1;
       $accounts = json_decode(file_get_contents('accounts.json'),1);
 			if(isset($update->message)){
 				$message = $update->message;
@@ -30,32 +30,32 @@ try {
 					if($text == '/start'){
               $bot->sendphoto([ 'chat_id'=>$chatId,
                   'photo'=>"https://t.me/Haking_Tools",
-                   'caption'=>'تمت البرمجه بواسطه (@forallgames) 💻',
+                   'caption'=>'تمت البرمجه بواسطه (@Haking_Tools) 💸',
                   'reply_markup'=>json_encode([
                       'inline_keyboard'=>[
-                          [['text'=>'تسجيل حساب وهمي في البوت 🏃‍♂','callback_data'=>'login']],
+                          [['text'=>'إضافة حساب وهمي جديد 🆕','callback_data'=>'login']],
                       ]
                   ])
               ]);   
              
-             //$bot->sendvideo([ 'chat_id'=>$chatId,
-                  //'video'=>"https://t.me/QQiiCc_TOOLS/2",
-                   //'caption'=>'فيديو توضيحي لعمل البوت 📍',
+             $bot->sendvideo([ 'chat_id'=>$chatId,
+                  'video'=>"https://t.me/Haking_Tools",
+                   'caption'=>'فيديو توضيحي لعمل البوت 📍',
 
-                //]);
+                ]);
 
                
-                 //$bot->sendvoice([ 'chat_id'=>$chatId,
-                  //'voice'=>"https://t.me/QQiiCc_TOOLS/3",
-                   //'caption'=>'بصمه تعليم السحب ♻️',
+                 $bot->sendvoice([ 'chat_id'=>$chatId,
+                  'voice'=>"https://t.me/Haking_Tools",
+                   'caption'=>'بصمه تعليم السحب ♻️',
 
-                //]);
+                ]);
                 
-                //$bot->sendvoice([ 'chat_id'=>$chatId,
-                  //'voice'=>"https://t.me/QQiiCc_TOOLS/4",
-                   //'caption'=>'بصمه تعليم السحب 2 ♻️',
+                $bot->sendvoice([ 'chat_id'=>$chatId,
+                  'voice'=>"https://t.me/Haking_Tools",
+                   'caption'=>'بصمه تعليم السحب 2 ♻️',
 
-                //]);
+                ]);
 
           } elseif($text != null){
           	if($config['mode'] != null){
@@ -127,13 +127,13 @@ try {
                       'chat_id'=>$chatId,
                       'message_id'=>$mid,
                       'text'=>"صفحه التحكم الخاصه بك عزيزي استمتع مع اسهل طريقه لسحب الحسابات و اقواها
-لمراسه المطور - @forallgames",
+لمراسه المطور - @Haking_Tools",
                   'reply_markup'=>json_encode([
                       'inline_keyboard'=>[
-                          [['text'=>'➕ أضافه حساب وهمي جديد','callback_data'=>'login']],
-                          [['text'=>'💡 طرق سحب اليوزرات 💡','callback_data'=>'grabber']],
-                          [['text'=>'⏸ بدء الصيد','callback_data'=>'run'],['text'=>'▶️ ايقاف الصيد','callback_data'=>'stop']],
-                              [['text'=>'🌏 حالة الحسابات الوهمية 🌍','callback_data'=>'status']],
+                          [['text'=>'إضافة حساب 👨🏼‍💻 ','callback_data'=>'login']],
+                          [['text'=>'طرق الصيد 🔎','callback_data'=>'grabber']],
+                          [['text'=>'.⏸ بدء الصيد','callback_data'=>'run'],['text'=>'.▶️ ايقاف الصيد','callback_data'=>'stop']],
+                          [['text'=>'حالة الحسابات ♻️','callback_data'=>'status']]
                       ]
                   ])
                   ]);
@@ -184,8 +184,8 @@ try {
 لشراء نسخه مراسلةة المطور 👁‍🗨',
                   'reply_markup'=>json_encode([
                       'inline_keyboard'=>[
-                          [['text'=>'▫️| مطور البوت','url'=>'t.me/forallgames']],
-                       [['text'=>"▪️| قناة البوت ", 'url'=>"t.me/Haking_Tools"]],
+                          [['text'=>'▫️| 『 Abd tools 』','url'=>'t.me/Haking_Tools]],
+                          [['text'=>"▪️| قناه صيد المشتركين", 'url'=>"t.me/Haking_Tools"]],
                       ]
                   ])
               ]);   
@@ -230,12 +230,12 @@ try {
                 'text'=>"Users collection page. \n - Users : $count \n - For Account : $for",
                 'reply_markup'=>json_encode([
                     'inline_keyboard'=>[
-                        [['text'=>'🗣 بحث كلمات','callback_data'=>'search']],
-                        [['text'=>'❗️بحث هاشتاك ','callback_data'=>'hashtag'],['text'=>'📈 من الاكسبلور','callback_data'=>'explore']],
-                        [['text'=>'Followers','callback_data'=>'followers'],['text'=>"Following",'callback_data'=>'following']],
-                        [['text'=>"الحساب المحدد : $for",'callback_data'=>'for']],
-                        [['text'=>'🚸 لستة يوزرات جديده','callback_data'=>'newList'],['text'=>'🚸 لستة يوزرات سابقة','callback_data'=>'append']],
-                        [['text'=>'♻️ الصفحه الرئيسية ','callback_data'=>'back']],
+                        [['text'=>'من البحث 📝','callback_data'=>'search']],
+                        [['text'=>'من هشتاك #⃣','callback_data'=>'hashtag'],['text'=>'من الاكسبلور 💡','callback_data'=>'explore']],
+                        [['text'=>'من المتابعين 👤','callback_data'=>'followers'],['text'=>"من المتابعهم 🗣",'callback_data'=>'following']],
+                        [['text'=>"الحساب المحدد 📧 : $for",'callback_data'=>'for']],
+                        [['text'=>'لسته جديدة 📥','callback_data'=>'newList'],['text'=>'لسته قديمة 📤','callback_data'=>'append']],
+                        [['text'=>'الصفحة الرئيسية ✅','callback_data'=>'back']]
                     ]
                 ])
             ]);
@@ -262,8 +262,7 @@ try {
             file_put_contents('config.json', json_encode($config));
           } elseif($data == 'hashtag'){
             $bot->sendMessage([
-                'chat_id'=>$chatId,
-                'text'=>"الان قم بأرسال الهاشتاك بدون علامه # يمكنك 🧿استخدام هاشتاك واحد فقط"
+'chat_id'=>$chatId,'text'=>"الان قم بأرسال الهاشتاك بدون علامه # يمكنك 🧿استخدام هاشتاك واحد فقط"
             ]);
             $config['mode'] = 'hashtag';
             file_put_contents('config.json', json_encode($config));
@@ -362,12 +361,12 @@ try {
                 'text'=>"Users collection page. \n - Users : $count \n - For Account : $for",
                 'reply_markup'=>json_encode([
                     'inline_keyboard'=>[
-                       [['text'=>'🗣 بحث كلمات','callback_data'=>'search']],
-                        [['text'=>'❗️بحث هاشتاك ','callback_data'=>'hashtag'],['text'=>'📈 من الاكسبلور','callback_data'=>'explore']],
-                        [['text'=>'Followers','callback_data'=>'followers'],['text'=>"Following",'callback_data'=>'following']],
-                        [['text'=>"الحساب المحدد : $for",'callback_data'=>'for']],
-                        [['text'=>'🚸 لستة يوزرات جديده','callback_data'=>'newList'],['text'=>'🚸 لستة يوزرات سابقة','callback_data'=>'append']],
-                        [['text'=>'♻️ الصفحه الرئيسية','callback_data'=>'back']],
+                        [['text'=>'من البحث 📝','callback_data'=>'search']],
+                        [['text'=>'من هشتاك #⃣','callback_data'=>'hashtag'],['text'=>'من الاكسبلور 💡','callback_data'=>'explore']],
+                        [['text'=>'من المتابعين 👤','callback_data'=>'followers'],['text'=>"من المتابعهم 🗣",'callback_data'=>'following']],
+                        [['text'=>"الحساب المحدد 📧 : $for",'callback_data'=>'for']],
+                        [['text'=>'لسته جديدة 📥','callback_data'=>'newList'],['text'=>'لسته قديمة 📤','callback_data'=>'append']],
+                        [['text'=>'الصفحة الرئيسية ✅','callback_data'=>'back']]
                     ]
                 ])
             ]);
@@ -397,10 +396,10 @@ try {
 في الاسفل هي حساباتك الوهميه المسجله في الاداة",
                   'reply_markup'=>json_encode([
                       'inline_keyboard'=>[
-                          [['text'=>'➕ أضافه حساب وهمي جديد','callback_data'=>'login']],
-                          [['text'=>'💡 طرق سحب اليوزرات 💡','callback_data'=>'grabber']],
-                          [['text'=>'⏸ بدء الصيد','callback_data'=>'run'],['text'=>'▶️ ايقاف الصيد','callback_data'=>'stop']],
-                         [['text'=>'🌏 حالة الحسابات الوهمية 🌍','callback_data'=>'status']],
+                          [['text'=>'إضافة حساب 👨🏼‍💻 ','callback_data'=>'login']],
+                          [['text'=>'طرق الصيد 🔎','callback_data'=>'grabber']],
+                          [['text'=>'.⏸ بدء الصيد','callback_data'=>'run'],['text'=>'.▶️ ايقاف الصيد','callback_data'=>'stop']],
+                          [['text'=>'حالة الحسابات ♻️','callback_data'=>'status']]
                       ]
                   ])
                   ]);
@@ -427,19 +426,19 @@ try {
           	  $config['for'] = $data[1];
           	  file_put_contents('config.json',json_encode($config));
               $for = $config['for'] != null ? $config['for'] : 'Select';
-              $count = count(file_get_contents($for));
+              $count = count(explode("\n", file_get_contents($for)));
               $bot->editMessageText([
                 'chat_id'=>$chatId,
                 'message_id'=>$mid,
                 'text'=>"Users collection page. \n - Users : $count \n - For Account : $for",
                 'reply_markup'=>json_encode([
                     'inline_keyboard'=>[
-                            [['text'=>'🗣 بحث كلمات','callback_data'=>'search']],
-                        [['text'=>'❗️بحث هاشتاك ','callback_data'=>'hashtag'],['text'=>'📈 من الاكسبلور','callback_data'=>'explore']],
-                        [['text'=>'Followers','callback_data'=>'followers'],['text'=>"Following",'callback_data'=>'following']],
-                        [['text'=>"For Account : $for",'callback_data'=>'for']],
-                        [['text'=>'🚸 لستة يوزرات جديده','callback_data'=>'newList'],['text'=>'🚸 لستة يوزرات سابقة','callback_data'=>'append']],
-                        [['text'=>'♻️ الصفحه الرئيسية','callback_data'=>'back']],
+                        [['text'=>'من البحث 📝','callback_data'=>'search']],
+                        [['text'=>'من هشتاك #⃣','callback_data'=>'hashtag'],['text'=>'من الاكسبلور 💡','callback_data'=>'explore']],
+                        [['text'=>'من المتابعين 👤','callback_data'=>'followers'],['text'=>"من المتابعهم 🗣",'callback_data'=>'following']],
+                        [['text'=>"الحساب المحدد 📧 : $for",'callback_data'=>'for']],
+                        [['text'=>'لسته جديدة 📥','callback_data'=>'newList'],['text'=>'لسته قديمة 📤','callback_data'=>'append']],
+                        [['text'=>'الصفحة الرئيسية ✅','callback_data'=>'back']]
                     ]
                 ])
             ]);
@@ -452,10 +451,10 @@ try {
 اختر ما تريده من الاسفل 👇",
                   'reply_markup'=>json_encode([
                       'inline_keyboard'=>[
-                          [['text'=>'➕ أضافه حساب وهمي جديد','callback_data'=>'login']],
-                          [['text'=>'💡 طرق سحب اليوزرات 💡','callback_data'=>'grabber']],
-                          [['text'=>'⏸ بدء الصيد','callback_data'=>'run'],['text'=>'▶️ ايقاف الصيد','callback_data'=>'stop']],
-                         [['text'=>'🌏 حالة الحسابات الوهمية 🌍','callback_data'=>'status']],
+                          [['text'=>'إضافة حساب 👨🏼‍💻 ','callback_data'=>'login']],
+                          [['text'=>'طرق الصيد 🔎','callback_data'=>'grabber']],
+                          [['text'=>'.⏸ بدء الصيد','callback_data'=>'run'],['text'=>'.▶️ ايقاف الصيد','callback_data'=>'stop']],
+                          [['text'=>'حالة الحسابات ♻️','callback_data'=>'status']]
                       ]
                   ])
                   ]);
@@ -473,10 +472,10 @@ try {
 اختر ما تريده من الاسفل 👇",
                   'reply_markup'=>json_encode([
                       'inline_keyboard'=>[
-                          [['text'=>'➕ أضافه حساب وهمي جديد','callback_data'=>'login']],
-                          [['text'=>'💡 طرق سحب اليوزرات 💡','callback_data'=>'grabber']],
-                          [['text'=>'⏸ بدء الصيد','callback_data'=>'run'],['text'=>'▶️ ايقاف الصيد','callback_data'=>'stop']],
-                         [['text'=>'🌏 حالةة الحسابات الوهمية 🌍','callback_data'=>'status']],
+                          [['text'=>'إضافة حساب 👨🏼‍💻 ','callback_data'=>'login']],
+                          [['text'=>'طرق الصيد 🔎','callback_data'=>'grabber']],
+                          [['text'=>'.⏸ بدء الصيد','callback_data'=>'run'],['text'=>'.▶️ ايقاف الصيد','callback_data'=>'stop']],
+                          [['text'=>'حالة الحسابات ♻️','callback_data'=>'status']]
                       ]
                     ])
                   ]);
@@ -489,5 +488,5 @@ try {
 	$bot = new EzTG(array('throw_telegram_errors'=>false,'token' => $token, 'callback' => $callback));
 } catch(Exception $e){
 	echo $e->getMessage().PHP_EOL;
-	Aurop/Madrid(3);
+	sleep(1);
 }

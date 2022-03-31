@@ -13,17 +13,16 @@ function status($for){
     
 }
 function checkMail($mail){
-$mail = strtolower($mail);
         if(mb_substr($mail, -10) === '@gmail.com'){
             return checkGmail($mail);
         } elseif(preg_match('/(live|hotmail|outlook)\.(.*)/', $mail)){
             return checkHotmail(newURL(),$mail);
-        } elseif(strpos($mail, 'yahoo.com')){
+        } elseif(strpos($mail, 'yahoo')){
             return checkYahoo($mail);
         } elseif(preg_match('/(mail|bk|yandex|inbox|list)\.(ru)/i', $mail)){
             return checkRU($mail);
         } else {
-            return false;
+            return true;
             
         }
 }
@@ -159,279 +158,73 @@ function checkYahoo($mail){
     if(strpos($mail, ' ') or strpos($mail, '+')){
         return false;
     }
-$user = $mail;
-@mkdir("Info");
-$c = curl_init("https://login.yahoo.com/"); 
-curl_setopt($c, CURLOPT_FOLLOWLOCATION, true); 
-curl_setopt($c, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"); 
-curl_setopt($c, CURLOPT_REFERER, 'https://www.google.com'); 
-curl_setopt($c, CURLOPT_ENCODING, 'gzip, deflate, br');  
-curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);  
-curl_setopt($c, CURLOPT_HEADER, true); 
-curl_setopt($c, CURLOPT_COOKIEJAR, "Info/cookie.txt"); 
-curl_setopt($c, CURLOPT_COOKIEFILE, "Info/cookie.txt"); 
-$response = curl_exec($c); 
-$httpcode = curl_getinfo($c); 
-$header = substr($response, 0, curl_getinfo($c, CURLINFO_HEADER_SIZE)); 
-$body = substr($response, curl_getinfo($c, CURLINFO_HEADER_SIZE)); 
-preg_match_all('#name="crumb" value="(.*?)" />#', $response, $crumb); 
-preg_match_all('#name="acrumb" value="(.*?)" />#', $response, $acrumb); 
-preg_match_all('#name="config" value="(.*?)" />#', $response, $config); 
-preg_match_all('#name="sessionIndex" value="(.*?)" />#', $response, $sesindex); 
-$data['status'] = "ok"; 
-$data['crumb'] = isset($crumb[1][0]) ? $crumb[1][0] : ""; 
-$data['acrumb'] = $acrumb[1][0]; 
-$data['config'] = isset($config[1][0]) ? $config[1][0] : ""; 
-$data['sesindex'] = $sesindex[1][0]; 
-$crumb = trim($data['crumb']); 
-$acrumb = trim($data['acrumb']); 
-$config = trim($data['config']); 
-$sesindex = trim($data['sesindex']); 
-$header = array(); 
-$header[] = "Host: login.yahoo.com"; 
-$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0"; 
-$header[] = "Accept: */*"; 
-$header[] = "Accept-Language: en-US,en;q=0.5"; 
-$header[] = "content-type: application/x-www-form-urlencoded; charset=UTF-8"; 
-$header[] = "X-Requested-With: XMLHttpRequest"; 
-$header[] = "Referer: https://login.yahoo.com/"; 
-$header[] = "Connection: keep-alive"; 
-$data = "acrumb=$acrumb&sessionIndex=$sesindex&username=".urlencode($user)."&passwd=&signin=Next"; 
-$c = curl_init("https://login.yahoo.com/"); 
-curl_setopt($c, CURLOPT_FOLLOWLOCATION, true); 
-curl_setopt($c, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"); 
-curl_setopt($c, CURLOPT_REFERER, 'https://login.yahoo.com/'); 
-curl_setopt($c, CURLOPT_ENCODING, 'gzip, deflate, br');  
-curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);  
-curl_setopt($c, CURLOPT_HTTPHEADER, $header); 
-curl_setopt($c, CURLOPT_COOKIEJAR, "Info/cookie.txt"); 
-curl_setopt($c, CURLOPT_COOKIEFILE, "Info/cookie.txt"); 
-curl_setopt($c, CURLOPT_POSTFIELDS, $data); 
-curl_setopt($c, CURLOPT_POST, 1); 
-$b = curl_exec($c); 
-if(strstr($b,"INVALID_USERNAME")){
-return true;
-}else{
-return false;
-}
+    $mail = preg_replace('/@(.*)/', '',$mail);
+    $login = curl_init(); 
+    curl_setopt($login, CURLOPT_URL, "https://login.yahoo.com/config/login?.src=fpctx&.intl=xa&.lang=en-US&.done=https://maktoob.yahoo.com"); 
+    curl_setopt($login, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($login, CURLOPT_HTTPHEADER, explode("\n", 'Accept: */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+bucket: mbr-atthaloc-oauth
+Connection: keep-alive
+content-type: application/x-www-form-urlencoded; charset=UTF-8
+Cookie: B=025g2jdfbjjjm&b=3&s=g6; APID=1Ae136a6cc-943f-11ea-b443-1234a9bcb81c; A1=d=AQABBHbOuV4CEKee2YDgG1TADDB_Q5sCFgEFEgEBAQE6x16oX1xXb2UB_SMAAAcIds65XpsCFgE&S=AQAAAoxIqLGVR1LoIovR16q2D10; A3=d=AQABBHbOuV4CEKee2YDgG1TADDB_Q5sCFgEFEgEBAQE6x16oX1xXb2UB_SMAAAcIds65XpsCFgE&S=AQAAAoxIqLGVR1LoIovR16q2D10; GUC=AQEBAQFexzpfqEIbZQRy; A1S=d=AQABBHbOuV4CEKee2YDgG1TADDB_Q5sCFgEFEgEBAQE6x16oX1xXb2UB_SMAAAcIds65XpsCFgE&S=AQAAAoxIqLGVR1LoIovR16q2D10&j=WORLD; AS=v=1&s=ZW1bkdGu&d=A5edddfb4|J02naJT.2QLkBalG93h42dqZgWw4_e6JDUwKilcf8hsH4xFyFOmG.l3oNQ4uEizaovq0f0t4LycCJZENom6c5hBxBSZPx_AWmFrTXLDwHxDKfGF685_03QK8i6kL7sxWvpM_PQioWtazQsOdPAHQaB5vgcqRY.pfvJUtg0_UA3v0VNgV4YEllYCy_XL2FPVfEtYtVWmU6mCGNlhv3cjGCXVmKYAd.LvpEuS3fhwVQRtzyV3WvC_UKcX76rFmsrot1NXOQyUIsoQpsazBD4AJgNanfcu4m1a.b58dGtT00Xc1UK70dlCpV2G9GFgGzdQ26mOytJEaw6LN.WeKMcsIazOV5p8xr8NzT4UCKedPxp0FjfXTN__ljqjw304zGUItcEaKlgB42h4Le2nXDUh3Rx5PaSHX8OrjTj5DD_lSNGcFs_p1QATC0mLQsvBySVnGXCfPnerQqgkGAdB1QqLgMe81oCDb1lVRDtd2f9KnoFnYJ10tlNfFGsYK1Z3FLakEmULZpZ19LBSBbnd.Mcs1NdaHxbvmbm8IZI_ceARS6dm6vI2Fi6t_97aki9Jp8jdqSgEDb8dekTMHzPUedGWL8WbqzLAgVCU7xcwm3KfcA.mHd0nuOC5r95swTtIT9B1aX6RGRLc0gmFcyfpHq_kWs4Z0VZNpe19veDGs4TE2oLOyEi25qJW3V5s1BukNrZ1.DlatQS0QkagRXA60m.5IjWSymErAAMtXtzB6KWeoF0dg80wkf18pNNb.d8R_nakCD3uG6NaWS_ny9xn5uHWFCSPbPaMztcNtbQsgo2Ood4ep9BsJFW5FwAEfZS33LEvKAO4p5R6RdMRIdaSiitk_Yx8VtAJ6WA.oafBVvvOrWDCjArH69vSpwtnu3Xvubqy1KQrMqMiUbK.pqBFgTPWxAnZtMSd3_2U8r4Lv12hvZOFL0A.WFYEXdCTOl9Kx34ldcyzAv9XMErVhh8xs4lAcCLBQxSZ6noJbHA--~A|B5edf2dbf|nol7O7X.2Srmm7l.XRgD2PIGNZ4UqvPtTH9Qq5lvMej5tdPAPwTIwahYRyIi5X3W726CFhKdSMxvFU1dJ4J7GQH4rvhhCI2EUms4_XFlozERFUnastq5IVzl6Gzm8GjnCu0a.9BgNSXmewl7MPDrrCTRKpkJQk4iTAy5o.yPso_HLAInPq_qxqMko3eV0xqUBq95gLcNJgWhod2yB2MILvXNRfeKRwP9j.PDhXQgfwTRcD0RINTMxNdvZDNcyfJilbEX0V1oAYF5geSAnzWvwRGZBzgwrWQZFajGOFmhrc7Qvz1veg7k8X4KTNZGmjQVIBdvSZhaGIpgluu4Ee2x.SPiGXoW5WMgfR7gK.6Dn4pwjQVwANjn8FUYxVYBmDERBW.st5w.3jdxApm9adyZOXSfWoaTnwDaxWZgEnYBVHJUa_M5ivjRQSaleiE.Zo4ldQdQJfafeLCCI919izdK9azFSIGCVq2leK8tkfcz1Gu3HKTyob1vGP9hAHI4coOxafOi.f8tiURm7oQyHz.9AO5_igd08vVLL7sGquOOhd2lwePIajESKFeQWVbg4p9E1Q6zZTnZcVq1fH.sj1ojPqcGIcLdBenmFT.YJEPM0zvWiUif9TpwtWO6KBKF51uxMZO6fJFa_TLNIU8PCqhYriCsFipY1GbA_NhnrBEjg39HHR6cZqEeyv3hiZCcmOMDThj17nEnhYJqySQ-~A; APIDTS=1591598146
+Host: login.yahoo.com
+Origin: https://login.yahoo.com
+Referer: https://login.yahoo.com/config/login
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+X-Requested-With: XMLHttpRequest'));
+    curl_setopt($login, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36');
+    curl_setopt($login,CURLOPT_POST, 1);
+    $fields = 'acrumb=ZW1bkdGu&sessionIndex=Qg--&username='.$mail.'&passwd=&signin=Next&persistent=y';
+    curl_setopt($login,CURLOPT_POSTFIELDS, $fields);
+    $login = curl_exec($login);
+    echo $login;
+    $res = json_decode($login);
+    if(isset($res->render) and isset($res->render->error) and $res->render->error == 'messages.ERROR_INVALID_USERNAME'){
+    	return true;
+    } else {
+    	return false;
+    }
 }
 function checkGmail($mail){
     $mail = trim($mail);
     if(strpos($mail, ' ') or strpos($mail, '+')){
         return false;
     }
-        $fromemail = 'glogalusa@emtg.in';
-        $details = '';
-
-        // Remove all illegal characters from email
-        $email = filter_var($mail, FILTER_SANITIZE_EMAIL);
-        // Validate e-mail
-        if (filter_var($mail, FILTER_VALIDATE_EMAIL))
-        {
-            // Get the domain of the email recipient
-            $email_arr = explode('@', $mail);
-                $domain = array_slice($email_arr, -1);
-                $domain = $domain[0];
-
-                // Trim [ and ] from beginning and end of domain string, respectively
-                $domain = ltrim($domain, '[');
-                $domain = rtrim($domain, ']');
-
-                if ('IPv6:' == substr($domain, 0, strlen('IPv6:')))
-                {
-                    $domain = substr($domain, strlen('IPv6') + 1);
-                }
-
-                $mxhosts = array();
-                // Check if the domain has an IP address assigned to it
-                if (filter_var($domain, FILTER_VALIDATE_IP))
-                {
-                    $mx_ip = $domain;
-                }
-                else
-                {
-                    // If no IP assigned, get the MX records for the host name
-                    getmxrr($domain, $mxhosts, $mxweight);
-                }
-
-                if (!empty($mxhosts))
-                {
-                    $mx_ip = $mxhosts[array_search(min($mxweight) , $mxhosts) ];
-                }
-                else
-                {
-                    // If MX records not found, get the A DNS records for the host
-                    if (filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
-                    {
-                        $record_a = dns_get_record($domain, DNS_A);
-                        // else get the AAAA IPv6 address record
-                        
-                    }
-                    elseif (filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6))
-                    {
-                        $record_a = dns_get_record($domain, DNS_AAAA);
-                    }
-
-                    if (!empty($record_a))
-                    {
-                        $mx_ip = $record_a[0]['ip'];
-                    }
-                    else
-                    {
-                        $mxhosts = array();
-                        // Check if the domain has an IP address assigned to it
-                        $domain = 'mail.' . $domain;
-                        if (filter_var($domain, FILTER_VALIDATE_IP))
-                        {
-                            $mx_ip = $domain;
-                        }
-                        else
-                        {
-                            // If no IP assigned, get the MX records for the host name
-                            getmxrr($domain, $mxhosts, $mxweight);
-                        }
-
-                        if (!empty($mxhosts))
-                        {
-                            $mx_ip = $mxhosts[array_search(min($mxweight) , $mxhosts) ];
-                        }
-                        else
-                        {
-                            // If MX records not found, get the A DNS records for the host
-                            if (filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
-                            {
-                                $record_a = dns_get_record($domain, DNS_A);
-                                // else get the AAAA IPv6 address record
-                                
-                            }
-                            elseif (filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6))
-                            {
-                                $record_a = dns_get_record($domain, DNS_AAAA);
-                            }
-
-                            if (!empty($record_a))
-                            {
-                                $mx_ip = $record_a[0]['ip'];
-                            }
-                            else
-                            {
-                                $domain = 'email.' . $domain;
-                                $mxhosts = array();
-                                // Check if the domain has an IP address assigned to it
-                                if (filter_var($domain, FILTER_VALIDATE_IP))
-                                {
-                                    $mx_ip = $domain;
-                                }
-                                else
-                                {
-                                    // If no IP assigned, get the MX records for the host name
-                                    getmxrr($domain, $mxhosts, $mxweight);
-                                }
-
-                                if (!empty($mxhosts))
-                                {
-                                    $mx_ip = $mxhosts[array_search(min($mxweight) , $mxhosts) ];
-                                }
-                                else
-                                {
-                                    // If MX records not found, get the A DNS records for the host
-                                    if (filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
-                                    {
-                                        $record_a = dns_get_record($domain, DNS_A);
-                                        // else get the AAAA IPv6 address record
-                                        
-                                    }
-                                    elseif (filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6))
-                                    {
-                                        $record_a = dns_get_record($domain, DNS_AAAA);
-                                    }
-
-                                    if (!empty($record_a))
-                                    {
-                                        $mx_ip = $record_a[0]['ip'];
-                                    }
-                                    else
-                                    {
-                                        // Exit the program if no MX records are found for the domain host
-                                        $result = 'fail';
-                                        $details .= 'No suitable MX records found';
-
-                                        return false;
-                                    }
-                                }
-
-                            }
-                        }
-
-                    }
-                }
-
-                // Open a socket connection with the hostname, smtp port 25
-                $connect = @fsockopen($mx_ip, 25);
-
-                if ($connect)
-                {
-
-                    // Initiate the Mail Sending SMTP transaction
-                    if (preg_match('/^220/i', $out = fgets($connect, 1024)))
-                    {
-
-                        // Send the HELO command to the SMTP server
-                        fputs($connect, "HELO $mx_ip\r\n");
-                        $out = fgets($connect, 1024);
-
-                        // Send an SMTP Mail command from the sender's email address
-                        fputs($connect, "MAIL FROM: <$fromemail>\r\n");
-                        $from = fgets($connect, 1024);
-
-                        // Send the SCPT command with the recepient's email address
-                        fputs($connect, "RCPT TO: <$mail>\r\n");
-                        $to = fgets($connect, 1024);
-                        $details .= $to . "\n";
-                        $test = $to;
-
-                        // Close the socket connection with QUIT command to the SMTP server
-                        fputs($connect, 'QUIT');
-                        fclose($connect);
-                    }
-                }
-                if (!strpos($details, 'OK'))
-                {
-$ch = curl_init(); 
-curl_setopt($ch, CURLOPT_URL, "http://abbas.zzz.com.ua/JA/index.php?email=".$email_arr[0]."@gmail.com");  
-curl_setopt($ch, CURLOPT_TCP_NODELAY, 1); 
-curl_setopt($ch, CURLOPT_FORBID_REUSE, 0); 
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
-curl_setopt($ch, CURLOPT_TIMEOUT, 10); 
-curl_setopt($ch, CURLOPT_ENCODING, null); 
-curl_setopt($ch, CURLOPT_HTTPHEADER, explode("\n",'Host: abbas.zzz.com.ua 
-Connection: keep-alive 
-Cache-Control: max-age=0 
-Save-Data: on 
-Upgrade-Insecure-Requests: 1 
-User-Agent: Mozilla/5.0 (Linux; Android 9; SM-A730F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.110 Mobile Safari/537.36 
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9 
-Accept-Encoding: gzip, deflate 
-Accept-Language: en-US,en;q=0.9,ar;q=0.8 
-Cookie: _ga=GA1.3.1096334772.1604396434; _gid=GA1.3.596060245.1604396434')); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
-$res = curl_exec($ch); 
-curl_close($ch);
-                        if(strstr($res,'{"status":"SUCCESS"}')){
-return true;
-}else{
-return false;
+  $mail = preg_replace('/@(.*)/', '',$mail);
+   $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL,'https://accounts.google.com/InputValidator?resource=SignUp&service=mail');
+  curl_setopt($ch,CURLOPT_HTTPHEADER, [
+    'User-Agent: Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16',
+'Content-Type: application/json; charset=utf-8',
+'Host: accounts.google.com',
+'Expect: 100-continue',
+    ]);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch,CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_ENCODING , "");
+  // echo $mail;
+  $fields = '{"input01":{"Input":"GmailAddress","GmailAddress":"'.$mail.'","FirstName":"'.str_shuffle('fdgh4hgbgbg').'","LastName":"'.str_shuffle('fdgh4hgbgbg').'"},"Locale":"en"}';
+  curl_setopt($ch,CURLOPT_POSTFIELDS, $fields);
+  $res = curl_exec($ch);
+  curl_close($ch);
+  $s =  json_decode($res);
+  if(isset($s->input01)){
+  if(isset($s->input01->Valid)){
+      if($s->input01->Valid == 'true'){
+          return true;
+      } else {
+          return false;
+      }
+  } else {
+      return false;
+  }
+  } else {
+      return false;
+  }
 }
-                }
-                else
-                {
-                    return false;
-                }
-            
-        }
-
-    }
 function checkHotmail($url,$mail){
     $mail = trim($mail);
     if(strpos($mail, ' ') or strpos($mail, '+')){
@@ -520,7 +313,7 @@ class EzTG
     }
     private function is_telegram()
     {
-        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) { //preferisco non usare x-forwarded-for xk si può spoof
+        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) { //@api_web
             $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];

@@ -57,7 +57,7 @@ for($i=0;$i<20;$i++){
 $ids = [];
 $for = file_get_contents('for');
 $i = 0;
-$e = 20;
+$e = 43;
 
 foreach($posts as $post){
 	$comments = curl_init();
@@ -92,7 +92,7 @@ foreach($posts as $post){
 			[['text'=>'Stop.','callback_data'=>'stopgr']]
 		]])
         	]);
-        	$e += 20;
+        	$e += 43;
       }
 			if($i > 5000){
 				exit;

@@ -23,7 +23,7 @@ $mid = bot('sendMessage',[
 $ids = explode(' ', $config['words']);
 foreach($ids as $user){
 	echo $user."\n";
-	sleep(8);
+	sleep(5);
 	$cookies = $accounts[$file];
 	$ig = new ig(['account'=>$accounts[$file],'file'=>$file]);
 	$info = $ig->getInfo($user);

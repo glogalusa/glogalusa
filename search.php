@@ -3,7 +3,7 @@ $chars = range('a', 'z');
 $nums = range(0,9);
 $chars = array_merge($chars, $nums);
 $i = 0;
-$e = 20;
+$e = 15;
 $accounts = json_decode(file_get_contents('accounts.json'),1);
 $config = json_decode(file_get_contents('config.json'),1);
 $file = $config['for'];
@@ -63,7 +63,7 @@ foreach($search->users as $user){
 			[['text'=>'Stop.','callback_data'=>'stopgr']]
 			]])
 	]);
-	$e += 10;
+	$e += 25;
 }
 }
 }
@@ -105,7 +105,7 @@ foreach($search->users as $user){
 			[['text'=>'Stop.','callback_data'=>'stopgr']]
 		]])
 	]);
-	$e += 10;
+	$e += 25;
 }
 }
 

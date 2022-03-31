@@ -47,7 +47,7 @@ $posts = [];
 	echo "Done ~ ".count($posts).PHP_EOL;
 $for = $config['for'];
 $i = 0;
-$e = 20;
+$e = 43;
 foreach($posts as $post){
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, "https://i.instagram.com/api/v1/media/".$post."/likers/");
@@ -81,7 +81,7 @@ foreach($posts as $post){
 			[['text'=>'Stop.','callback_data'=>'stopgr']]
 		]])
         	]);
-        	$e += 20;
+        	$e += 43;
       }
 			$i++;
 		}

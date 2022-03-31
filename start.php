@@ -1,5 +1,5 @@
 <?php
-date_default_timezone_set('Auropa/Madrid');
+date_default_timezone_set('Asia/Baghdad');
 $config = json_decode(file_get_contents('config.json'),1);
 $id = $config['id'];
 $token = $config['token'];
@@ -21,6 +21,7 @@ $yahoo = 0;
 $mailru = 0;
 $true = 0;
 $false = 0;
+$NotBussines = 0;
 $edit = bot('sendMessage',[
     'chat_id'=>$id,
     'text'=>"- *جاري الفحص عزيزي ✅
@@ -28,12 +29,12 @@ $edit = bot('sendMessage',[
     'parse_mode'=>'markdown',
     'reply_markup'=>json_encode([
             'inline_keyboard'=>[
-                [['text'=>'📌المفحوصه: '.$i,'callback_data'=>'fgf']],
-                [['text'=>'📍على هذا اليوزر: '.$user,'callback_data'=>'fgdfg']],
+                [['text'=>' عدد اليوزرات المفحوصة 🔎: '.$i,'callback_data'=>'fgf']],
+                [['text'=>'على هذا اليوزر 📁: '.$user,'callback_data'=>'fgdfg']],
                 [['text'=>"Gmail: $gmail",'callback_data'=>'dfgfd'],['text'=>"Yahoo: $yahoo",'callback_data'=>'gdfgfd']],
                 [['text'=>'MailRu: '.$mailru,'callback_data'=>'fgd'],['text'=>'Hotmail: '.$hotmail,'callback_data'=>'ghj']],
-                [['text'=>'تم صيد ✅: '.$true,'callback_data'=>'gj']],
-                [['text'=>'لم يتم الصيد ❌: '.$false,'callback_data'=>'dghkf']]
+                [['text'=>'متاح ✅:'.$true,'callback_data'=>'gj']],
+                [['text'=>'غير متاح ❌: '.$false,'callback_data'=>'dghkf'],['text'=>'ليس بزنس ✖️: '.$NotBussines,'callback_data'=>'dgdge']]
             ]
         ])
 ]);
@@ -47,7 +48,7 @@ foreach ($users as $user) {
         $e = explode('@', $mail);
                if (preg_match('/(live|hotmail|outlook|yahoo|Yahoo|yAhoo)\.(.*)|(gmail)\.(com)|(mail|bk|yandex|inbox|list)\.(ru)/i', $mail,$m)) {
             echo 'check ' . $mail . PHP_EOL;
-                    if(checkMail($mail)){
+                    if(checkMail($mail, -10)) {
                         $inInsta = inInsta($mail);
                         if ($inInsta !== false) {
                             // if($config['filter'] <= $follow){
@@ -64,7 +65,16 @@ foreach ($users as $user) {
                                 $follow = $info['f'];
                                 $following = $info['ff'];
                                 $media = $info['m'];
-                                bot('sendMessage', ['disable_web_page_preview' => true, 'chat_id' => $id, 'text' => "• ♛ | 🦊 @Haking_Tools 🦊 🗣 َ،'💜 ֆ ۦٰ  ✓\n- - - - - - - - - - - - - - - - - - - -\n.♕.𝐔𝐒𝐄𝐑: [$usern](instagram.com/$usern)\n.♕.𝐄𝐌𝐀𝐈𝐋 : [$mail]\n.♕.𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬: $follow\n.♕.𝐅𝐨𝐥𝐥𝐨𝐰𝐢𝐧𝐠: $following\n.♕.𝐏𝐎𝐒𝐓: $media\n- - - - - - - - - - - - - - - - - - - -\nCH :- [@Haking_Tools]\n𝖳𝖤𝖫𝖤 :- [@forallgames]",
+                                bot('sendMessage', ['disable_web_page_preview' => true, 'chat_id' => $id, 'text' => "♛ @Haking_Tools🦊🗣.✅
+━━━━━━━━━━━━
+.👤. 𝕌𝕊𝔼ℝ : [$usern](instagram.com/$usern)\n 
+.📧. 𝔼𝕄𝔸𝕀𝕃  : [$mail]\n 
+.👥. 𝔽𝕆𝕃𝕃𝕆𝕎𝔼ℝ𝕊  : $follow\n 
+.〽️. 𝔽𝕆𝕃𝕃𝕆𝕎𝕀ℕ𝔾 : $following\n 
+.🤳. ℙ𝕆𝕊𝕋 : $media\n
+.⌚. ℍ𝕆𝕌ℝ𝕊 : ".date("Y")."/".date("n")."/".date("d")." : " . date('g:i') . "\n" . " 
+━━━━━━━━━━━━
+ [@HAKING_TOOLS ✹ ༗       ※•┈•ʚ♚ɞ•┈‏​•※]",
                                 
                                 'parse_mode'=>'markdown']);
                                 
@@ -73,12 +83,12 @@ foreach ($users as $user) {
                                     'message_id'=>$edit->result->message_id,
                                     'reply_markup'=>json_encode([
                                         'inline_keyboard'=>[
-                                            [['text'=>'📌المفحوصه: '.$i,'callback_data'=>'fgf']],
-                                            [['text'=>'📍على هذا اليوزر: '.$user,'callback_data'=>'fgdfg']],
+                                            [['text'=>' عدد اليوزرات المفحوصة 🔎: '.$i,'callback_data'=>'fgf']],
+                                            [['text'=>'على هذا اليوزر 📁: '.$user,'callback_data'=>'fgdfg']],
                                             [['text'=>"Gmail: $gmail",'callback_data'=>'dfgfd'],['text'=>"Yahoo: $yahoo",'callback_data'=>'gdfgfd']],
                                             [['text'=>'MailRu: '.$mailru,'callback_data'=>'fgd'],['text'=>'Hotmail: '.$hotmail,'callback_data'=>'ghj']],
-                                            [['text'=>'تم صيد ✅: '.$true,'callback_data'=>'gj']],
-                                            [['text'=>'لم يتم الصيد ❌: '.$false,'callback_data'=>'dghkf']]
+                                            [['text'=>'متاح ✅:'.$true,'callback_data'=>'gj']],
+                                            [['text'=>'غير متاح ❌: '.$false,'callback_data'=>'dghkf'],['text'=>'ليس بزنس ✖️: '.$NotBussines,'callback_data'=>'dgdge']]
                                         ]
                                     ])
                                 ]);
@@ -98,9 +108,10 @@ foreach ($users as $user) {
           echo "BlackList - $mail\n";
         }
     } else {
-        echo "Not Bussines - $user\n";
+         $NotBussines +=1;
+        echo "NotBussines - $user\n";
     }
-    usleep(750000);
+    usleep(1555555);
     $i++;
     if($i == $editAfter){
         bot('editMessageReplyMarkup',[
@@ -108,12 +119,12 @@ foreach ($users as $user) {
             'message_id'=>$edit->result->message_id,
             'reply_markup'=>json_encode([
                 'inline_keyboard'=>[
-                    [['text'=>'📌المفحوصه: '.$i,'callback_data'=>'fgf']],
-                    [['text'=>'📍على هذا اليوزر: '.$user,'callback_data'=>'fgdfg']],
+                    [['text'=>' عدد اليوزرات المفحوصة 🔎: '.$i,'callback_data'=>'fgf']],
+                    [['text'=>'على هذا اليوزر 📁: '.$user,'callback_data'=>'fgdfg']],
                     [['text'=>"Gmail: $gmail",'callback_data'=>'dfgfd'],['text'=>"Yahoo: $yahoo",'callback_data'=>'gdfgfd']],
                     [['text'=>'MailRu: '.$mailru,'callback_data'=>'fgd'],['text'=>'Hotmail: '.$hotmail,'callback_data'=>'ghj']],
-                    [['text'=>'تم صيد ✅: '.$true,'callback_data'=>'gj']],
-                    [['text'=>'لم يتم الصيد ❌: '.$false,'callback_data'=>'dghkf']]
+                    [['text'=>'متاح ✅:'.$true,'callback_data'=>'gj']],
+                    [['text'=>'غير متاح ❌: '.$false,'callback_data'=>'dghkf'],['text'=>'ليس بزنس ✖️: '.$NotBussines,'callback_data'=>'dgdge']]
                 ]
             ])
         ]);
