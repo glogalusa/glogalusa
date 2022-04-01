@@ -34,7 +34,7 @@ try {
                   'reply_markup'=>json_encode([
                       'inline_keyboard'=>[
                           [['text'=>'تسجيل حساب 🌚','callback_data'=>'login']],
-                       [['text'=>"ℳᎯℛᎾ ☕️", 'url'=>"https://t.me/haking_tools"]],
+                       [['text'=>"🦊SUBSCRIBE_اشترك🦊", 'url'=>"https://t.me/haking_tools"]],
                        [['text'=>"𓆰⌯SSVIPSS 𝗛𝗨𝗡𝗧𝗘𝗥 ⌯ 🏵", 'url'=>"https://t.me/haking_tools"]],
                       ]
                   ])
